@@ -1,10 +1,14 @@
-FROM conda/miniconda3 AS build
+FROM continuumio/miniconda3 AS build
 
 COPY environment.yml .
 RUN conda env create -f environment.yml
-RUN conda install -c conda-forge conda-pack
+RUN conda install nomkl && \
+    conda install -c conda-forge conda-pack && \
+    conda clean -a
+RUN find /opt/conda/ -follow -type f -name '*.pyc' -delete
+
 ENTRYPOINT ["/bin/bash"]
-RUN conda-pack -n facecheck -o /tmp/env.tar && \
+RUN conda-pack -n dpr_demo -o /tmp/env.tar && \
     mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
     rm /tmp/env.tar
 

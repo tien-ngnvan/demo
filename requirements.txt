@@ -1,5 +1,6 @@
 faiss-cpu
 langchain
-transformers
 flask
-optimum
+opttimum
+optimum-intel
+onnx
