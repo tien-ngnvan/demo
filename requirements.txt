@@ -1,6 +1,2 @@
-faiss-cpu
-langchain
-flask
-opttimum
-optimum-intel
-onnx
+tokenizers
+sympy
