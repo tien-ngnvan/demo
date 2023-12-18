@@ -1,14 +1,12 @@
 import os
-from hf_tokenizer import BertTokenizer
+from hf_tokenizer import PhobertTokenizer
+from pyvi import ViTokenizer
 
+model_name_or_path = 'vietnamese-bi-encoder'
+tokenizer = PhobertTokenizer.from_pretrained(
+    model_name_or_path,
+    vocab_file=os.path.join(model_name_or_path,'vocab.txt'),
+    merges_file=os.path.join(model_name_or_path,'bpe.codes'))
 
-model_name_or_path = 'openvino_mBert'
-tokenizer = BertTokenizer.from_pretrained(model_name_or_path, os.path.join(model_name_or_path,'vocab.txt'))
-
-print("Tokenize: ", tokenizer.tokenize('hello tháng 12'))
-print("Encode: ", tokenizer.encode('hello tháng 12'))
-print("Decode: ", tokenizer.decode(tokenizer.encode('hello tháng 12')))
-
-# Tokenize:  ['hell', '##o', 'tháng', '12']
-# Encode:  [101, 61694, 10133, 11642, 10186, 102]
-# Decode:  [CLS] hello tháng 12 [SEP]
+pyvi_tokened = ViTokenizer.tokenize('Hello, đại học Công Nghệ Thông Tin')
+print("Tokenize: ", tokenizer(pyvi_tokened))
